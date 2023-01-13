@@ -18,7 +18,6 @@ import random
 from datetime import datetime
 from pathlib import Path
 
-from garuda.core.logs import setup_logging
 
 logger = logging.getLogger(__name__)
 
@@ -164,17 +163,17 @@ class BasePlot:
         for i in range(1, self.n_axes + 1):
             setattr(self, f'ax{i}', value[i - 1])
 
-    def _set_title(self):
-        pass
+    def set_title(self):
+        raise NotImplementedError(Needs to be implemented by subclass.')
 
-    def _set_axes(self):
-        pass
+    def set_axes(self):
+        raise NotImplementedError(Needs to be implemented by subclass.')
 
-    def _get_xy_data(self):
-        pass
+    def get_xy_data(self):
+        raise NotImplementedError(Needs to be implemented by subclass.')
 
-    def _feed_plot(self):
-        pass
+    def feed_plot(self):
+        raise NotImplementedError(Needs to be implemented by subclass.')
 
     def create_plot(self):
         self._get_xy_data()
@@ -205,7 +204,7 @@ class HyperparameterPlots(BasePlot):
         self.block_names = block_names
         self.init_axes(Axes)
 
-    def _set_axes(self):
+    def set_axes(self):
         self.__dict__['ax1'].set_ylabel('in ms', fontsize=14)
         for i, ax in enumerate([self.__dict__[f'ax{i+1}'] for i in range(3)]):
             ax.set_xlim(np.min(self.X[i]) * (1 - 0.1), np.max(self.X[i]) * (1 + 0.05))
@@ -217,7 +216,7 @@ class HyperparameterPlots(BasePlot):
                     height += np.max(self.plt_data[self.paras[i]][b])
             ax.set_ylim(0, height)
 
-    def _feed_plot(self):
+    def feed_plot(self):
         legend_lines = get_legend([self.arch_colors[i] for i in range(3)])
         plt.figlegend(
             legend_lines,
