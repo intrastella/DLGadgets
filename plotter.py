@@ -164,16 +164,16 @@ class BasePlot:
             setattr(self, f'ax{i}', value[i - 1])
 
     def set_title(self):
-        raise NotImplementedError(Needs to be implemented by subclass.')
+        raise NotImplementedError('Needs to be implemented by subclass.')
 
     def set_axes(self):
-        raise NotImplementedError(Needs to be implemented by subclass.')
+        raise NotImplementedError('Needs to be implemented by subclass.')
 
     def get_xy_data(self):
-        raise NotImplementedError(Needs to be implemented by subclass.')
+        raise NotImplementedError('Needs to be implemented by subclass.')
 
     def feed_plot(self):
-        raise NotImplementedError(Needs to be implemented by subclass.')
+        raise NotImplementedError('Needs to be implemented by subclass.')
 
     def create_plot(self):
         self._get_xy_data()
